@@ -107,7 +107,7 @@ var specialCharacters = [
 ];
 var piggyBank = [];
 
-var passwordButton = document.querySelector("#generate-password");
+var passwordButton = document.querySelector('button');
 var passwordOutput = document.querySelector("#password");
 
 //intial prompt for password values
@@ -135,22 +135,35 @@ var grabInputValues = function () {
     var upperCaseValue = confirm("Click OK to confirm upper characters.");
     var numericCaseValue = confirm("Click OK to confirm numeric characters.");
     var specialCaseValue = confirm("Click OK to confirm special characters.");
+
+    if (lowerCaseValue) {
+        piggyBank = piggyBank.concat(lowerCasedCharacters);
+    }
+    if (upperCaseValue) {
+        piggyBank = piggyBank.concat(upperCasedCharacters);
+    }
+    if (numericCaseValue) {
+        piggyBank = piggyBank.concat(numericCharacters);
+    }
+    if (specialCaseValue) {
+        piggyBank = piggyBank.concat(specialCharacters);
+    }
     console.log(piggyBank);
+
     if (!lowerCaseValue && !upperCaseValue && !numericCaseValue && !specialCaseValue) {
         alert("Must select at least one character type.");
         return null;
     }
 
-    var valueOptions = {
-        charactersValue,
-        lowerCaseValue,
-        upperCaseValue,
-        numericCaseValue,
-        specialCaseValue
+    var password = [];
+    for (var i = 0; i < charactersValue; i++) {
+        var generatePassword = piggyBank[Math.floor(Math.random() * piggyBank.length)];
+        password = password.concat(generatePassword);
     }
+    password = password.join('');
+    console.log(password);
+    passwordOutput = alert('Generated password: ' + password);
 
-    return valueOptions;
 }
 
-grabInputValues();
-// passwordButton.addEventListener("click", grabInputValues);
+passwordButton.addEventListener("click", grabInputValues);
